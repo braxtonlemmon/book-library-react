@@ -83,6 +83,11 @@ button:hover {
   display: grid;
 }
 
+/* disable book card buttons while form is open */
+.disabled {
+  pointer-events: none;
+}
+
 .card-label {
 	font-weight: 700;
 	font-size: 18px;

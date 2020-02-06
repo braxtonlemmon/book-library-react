@@ -6,7 +6,8 @@ class App extends Component {
     super(props);
     this.state = {
       books: this.props.books,
-      showForm: false
+      showForm: false,
+      currentId: this.props.books[this.props.books.length - 1].id
     }
     this.createBook = this.createBook.bind(this);
   }
@@ -24,22 +25,27 @@ class App extends Component {
       return {
         books: [...prevState.books,
           {
-            id: prevState.books.length + 1,
+            id: prevState.currentId + 1,
             title: formData.title,
             author: formData.author,
             pages: parseInt(formData.pages),
             readStatus: formData.readStatus === 'true' ? true : false,
             img: formData.img
-          }]
+          }],
+        id: prevState.currentId + 1 
       }
     })
+
   }
 
   render() {
     return (
       <div className="wrapper">
         <Header showForm={this.showForm} />
-        <AllBooks books={this.state.books} />
+        <AllBooks 
+          books={this.state.books} 
+          formStatus={this.state.showForm}
+        />
         {this.state.showForm &&
           <FormContainer 
             sendData={this.createBook}
@@ -52,20 +58,6 @@ class App extends Component {
   }
 }
 
-// class Header extends Component {
-
-//   render() {
-//     return (
-//       <header className="header">
-//         <h1>Book Library</h1>
-//         <button 
-//           className="new-book"
-//           onClick={handleClick}
-//           >new book</button>
-//       </header>
-//     )
-//   }
-// }
 const Header = ({ showForm }) => {
   return (
     <header className="header">
@@ -81,13 +73,13 @@ const Header = ({ showForm }) => {
 class AllBooks extends Component {
   render() {
     const allBooks = [];
-    console.log(Array.isArray(this.props.books));
-    console.log('hi');
+    console.log(this.props.books);
     this.props.books.forEach(book => {
       allBooks.push(
         <Book 
           book={book}
           key={book.id}
+          formStatus={this.props.formStatus}
         />
       )
     })
@@ -103,7 +95,7 @@ class AllBooks extends Component {
 class Book extends Component {
   render() {
     return(
-      <div className="book">
+      <div className={this.props.formStatus ? "book disabled" : "book"}>
         <BookInfo book={this.props.book}/>
         <BookButtons />
       </div>
@@ -167,7 +159,6 @@ class FormContainer extends Component {
       pages: '',
       readStatus: '',
       img: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1442151714l/18803640._SY475_.jpg',
-      id: 99
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -189,7 +180,6 @@ class FormContainer extends Component {
         pages: '',
         readStatus: '',
         img: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1442151714l/18803640._SY475_.jpg',
-        id: 88
     })
   }
 
