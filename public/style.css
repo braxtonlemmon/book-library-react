@@ -115,6 +115,20 @@ button:hover {
   width: 55px;
 }
 
+/* FORM */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  grid-column: 2 / span 1;
+  grid-row: 2 / span 1;
+  background-color: red;
+  height: 300px;
+}
+
+.book-form {
+  display: flex;
+  flex-direction: column;
+}
 @media only screen and (min-width: 768px) {
 	.container {
 		grid-template-columns: repeat(3, 1fr);

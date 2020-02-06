@@ -5,11 +5,20 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      books: this.props.books
+      books: this.props.books,
+      showForm: false
     }
     this.createBook = this.createBook.bind(this);
   }
   
+  showForm = () => {
+    this.setState({showForm: true});
+  }
+
+  hideForm = () => {
+    this.setState({showForm: false});
+  }
+
   createBook = (formData) => {
     this.setState(prevState => {
       return {
@@ -29,23 +38,44 @@ class App extends Component {
   render() {
     return (
       <div className="wrapper">
-        <Header />
+        <Header showForm={this.showForm} />
         <AllBooks books={this.state.books} />
-        <FormContainer sendData={this.createBook} />
+        {this.state.showForm &&
+          <FormContainer 
+            sendData={this.createBook}
+            hideForm={this.hideForm} 
+          />
+        }
+        
       </div>
     )
   }
 }
 
-class Header extends Component {
-  render() {
-    return (
-      <header className="header">
-        <h1>Book Library</h1>
-        <button className="new-book">new book</button>
-      </header>
-    )
-  }
+// class Header extends Component {
+
+//   render() {
+//     return (
+//       <header className="header">
+//         <h1>Book Library</h1>
+//         <button 
+//           className="new-book"
+//           onClick={handleClick}
+//           >new book</button>
+//       </header>
+//     )
+//   }
+// }
+const Header = ({ showForm }) => {
+  return (
+    <header className="header">
+      <h1>Book Library</h1>
+      <button
+        className="new-book"
+        onClick={() => showForm() }
+      >new book</button>
+    </header>
+  )
 }
 
 class AllBooks extends Component {
@@ -129,8 +159,8 @@ class BookButtons extends Component {
 }
 
 class FormContainer extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       title: '',
       author: '',
@@ -152,6 +182,7 @@ class FormContainer extends Component {
   handleSubmit(e) {
     e.preventDefault();
     this.sendToParent();
+    this.props.hideForm();
     this.setState({
         title: '',
         author: '',
@@ -162,13 +193,18 @@ class FormContainer extends Component {
     })
   }
 
+  handleCancel = (e) => {
+    e.preventDefault();
+    this.props.hideForm();
+  }
+
   sendToParent = () => {
     this.props.sendData(this.state)
   }
 
   render() {
     return (
-      <div>
+      <div className="form-container">
         <form className="book-form" name="bookForm">
           <h2>Book Information</h2>
           <label htmlFor="title">Title</label>
@@ -234,16 +270,12 @@ class FormContainer extends Component {
               onClick={this.handleSubmit}
             >
               Add Book</button>
-            <button className="button cancel">Cancel</button>
+            <button 
+              className="button cancel"
+              onClick={this.handleCancel}
+            >Cancel</button>
           </div>
         </form>
-        <div>
-          <p>Title: {this.state.title}</p>
-          <p>Author: {this.state.author}</p>
-          <p>Pages: {this.state.pages}</p>
-          <p>Read: {this.state.readStatus === 'true' ? 'Yes' : 'No'}</p>
-  
-        </div>
       </div>
     )
   }
