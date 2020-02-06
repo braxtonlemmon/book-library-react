@@ -152,6 +152,14 @@ class FormContainer extends Component {
   handleSubmit(e) {
     e.preventDefault();
     this.sendToParent();
+    this.setState({
+        title: '',
+        author: '',
+        pages: '',
+        readStatus: '',
+        img: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1442151714l/18803640._SY475_.jpg',
+        id: 88
+    })
   }
 
   sendToParent = () => {
