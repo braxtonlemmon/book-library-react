@@ -10,6 +10,7 @@ class App extends Component {
       currentId: this.props.books[this.props.books.length - 1].id
     }
     this.createBook = this.createBook.bind(this);
+    this.deleteBookFromState = this.deleteBookFromState.bind(this);
   }
   
   showForm = () => {
@@ -18,6 +19,13 @@ class App extends Component {
 
   hideForm = () => {
     this.setState({showForm: false});
+  }
+
+  deleteBookFromState(idToDelete) {
+    this.setState(prevState => {
+      return { 
+        books: prevState.books.filter(book => book.id !== idToDelete)}
+    })
   }
 
   createBook = (formData) => {
@@ -45,6 +53,7 @@ class App extends Component {
         <AllBooks 
           books={this.state.books} 
           formStatus={this.state.showForm}
+          deleteBookFromState={this.deleteBookFromState}
         />
         {this.state.showForm &&
           <FormContainer 
@@ -80,6 +89,7 @@ class AllBooks extends Component {
           book={book}
           key={book.id}
           formStatus={this.props.formStatus}
+          deleteBookFromState={this.props.deleteBookFromState}
         />
       )
     })
@@ -97,7 +107,10 @@ class Book extends Component {
     return(
       <div className={this.props.formStatus ? "book disabled" : "book"}>
         <BookInfo book={this.props.book}/>
-        <BookButtons />
+        <BookButtons 
+          deleteBookFromState={this.props.deleteBookFromState} 
+          book={this.props.book}
+        />
       </div>
     )
   }
@@ -139,10 +152,19 @@ class BookInfo extends Component {
 }
 
 class BookButtons extends Component {
+  constructor() {
+    super();
+    this.deleteBook = this.deleteBook.bind(this);
+  }
+  
+  deleteBook() {
+    this.props.deleteBookFromState(this.props.book.id)
+  }
+
   render() {
     return (
       <div className="book-buttons">
-        <button>Delete</button>
+        <button onClick={this.deleteBook}>Delete</button>
         <button>Edit</button>
         <button>Read</button>
       </div>
