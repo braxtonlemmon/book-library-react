@@ -166,7 +166,6 @@ class BookButtons extends Component {
       <div className="book-buttons">
         <button onClick={this.deleteBook}>Delete</button>
         <button>Edit</button>
-        <button>Read</button>
       </div>
     )
   }

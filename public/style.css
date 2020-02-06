@@ -111,13 +111,16 @@ button:hover {
 .book-buttons {
   display: grid;
   gap: 10px;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: center;
 }
 
 .book-buttons >* {
-  margin-top: 10px;
+
   height: 30px;
   width: 55px;
+  justify-self: center;
+  align-self: center;
 }
 
 /* FORM */
