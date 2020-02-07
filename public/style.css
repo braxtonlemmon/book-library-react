@@ -1,8 +1,9 @@
+/* UNIVERSAL */
+
 * {
 	margin: 0;
 	padding: 0;
-	box-sizing: border-box;
-	
+	box-sizing: border-box;	
 }
 
 body {
@@ -12,7 +13,6 @@ body {
   font-family: 'Poppins', sans-serif;
   line-height: 1;
 }
-
 
 button {
 	border-radius: 5px;
@@ -69,7 +69,7 @@ button:focus {
   padding-bottom: 20px;
 }
 
-/* Book card */
+/* BOOK CARD*/
 .book {
 	background-color: rgb(143, 95, 95);
 	border: 5px solid black;
@@ -101,6 +101,7 @@ button:focus {
 	font-size: 18px;
 	text-transform: uppercase;
 }
+
 .book-info {
   display: grid;
   grid-template-rows: 1fr 210px;
@@ -110,12 +111,14 @@ button:focus {
   display: grid;
   grid-template-columns: 90px 1fr;
 }
+
 .book-cover {
   max-height: 200px;
   object-fit: contain;
   margin: 5px auto;
 }
 
+/* Book card buttons */
 .book-buttons {
   display: grid;
   gap: 10px;
