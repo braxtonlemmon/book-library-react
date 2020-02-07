@@ -19,7 +19,11 @@ button {
 }
 
 button:hover {
-	transform: scale(1.02);
+	transform: scale(1.05);
+}
+
+button:focus {
+  outline: none;
 }
 
 .wrapper {
@@ -113,14 +117,17 @@ button:hover {
   gap: 10px;
   grid-template-columns: repeat(2, 1fr);
   justify-content: center;
+  margin-top: 15px;
 }
 
 .book-buttons >* {
-
   height: 30px;
   width: 55px;
   justify-self: center;
-  align-self: center;
+}
+
+.delete-button {
+  background-color: rgba(196, 0, 0, 0.651);
 }
 
 /* FORM */
@@ -137,6 +144,7 @@ button:hover {
   display: flex;
   flex-direction: column;
 }
+
 @media only screen and (min-width: 768px) {
 	.container {
 		grid-template-columns: repeat(3, 1fr);

@@ -11,17 +11,30 @@ class App extends Component {
     }
     this.createBook = this.createBook.bind(this);
     this.deleteBookFromState = this.deleteBookFromState.bind(this);
+    this.showForm = this.showForm.bind(this);
+    this.hideForm = this.hideForm.bind(this);
+    // this.editBook = this.editBook.bind(this);
   }
   
   showForm = () => {
     this.setState({showForm: true});
   }
 
+  getBook = (id) => { 
+    const book = this.state.books.find(book => book.id === id) 
+    console.log(book);
+    return book;
+  };
+
   hideForm = () => {
     this.setState({showForm: false});
   }
 
-  deleteBookFromState(idToDelete) {
+  // editBook = (idToEdit) => {
+  //   return this.state.books.find(book => book.id === idToEdit)
+  // }
+
+  deleteBookFromState = (idToDelete) => {
     this.setState(prevState => {
       return { 
         books: prevState.books.filter(book => book.id !== idToDelete)}
@@ -54,9 +67,12 @@ class App extends Component {
           books={this.state.books} 
           formStatus={this.state.showForm}
           deleteBookFromState={this.deleteBookFromState}
+          getBook={this.getBook}
+          editBook={this.editBook}
         />
         {this.state.showForm &&
-          <FormContainer 
+          <FormContainer
+            book={this.getBook}
             sendData={this.createBook}
             hideForm={this.hideForm} 
           />
@@ -90,6 +106,7 @@ class AllBooks extends Component {
           key={book.id}
           formStatus={this.props.formStatus}
           deleteBookFromState={this.props.deleteBookFromState}
+          getBook={this.props.getBook}
         />
       )
     })
@@ -109,6 +126,7 @@ class Book extends Component {
         <BookInfo book={this.props.book}/>
         <BookButtons 
           deleteBookFromState={this.props.deleteBookFromState} 
+          getBook={this.props.getBook}
           book={this.props.book}
         />
       </div>
@@ -155,17 +173,28 @@ class BookButtons extends Component {
   constructor() {
     super();
     this.deleteBook = this.deleteBook.bind(this);
+    this.findBook = this.findBook.bind(this);
   }
   
   deleteBook() {
     this.props.deleteBookFromState(this.props.book.id)
   }
 
+  findBook() {
+    this.props.getBook(this.props.book.id);
+  }
+
   render() {
     return (
       <div className="book-buttons">
-        <button onClick={this.deleteBook}>Delete</button>
-        <button>Edit</button>
+        <button 
+          onClick={this.findBook}
+          className="edit-button"
+        >Edit</button>
+        <button 
+          onClick={this.deleteBook}
+          className="delete-button"  
+        >Delete</button>
       </div>
     )
   }
