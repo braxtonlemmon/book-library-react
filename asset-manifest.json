@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.js": "/book-library-react/static/js/main.ea490350.chunk.js",
+    "main.js.map": "/book-library-react/static/js/main.ea490350.chunk.js.map",
+    "runtime-main.js": "/book-library-react/static/js/runtime-main.3523973e.js",
+    "runtime-main.js.map": "/book-library-react/static/js/runtime-main.3523973e.js.map",
+    "static/js/2.9bc19038.chunk.js": "/book-library-react/static/js/2.9bc19038.chunk.js",
+    "static/js/2.9bc19038.chunk.js.map": "/book-library-react/static/js/2.9bc19038.chunk.js.map",
+    "index.html": "/book-library-react/index.html",
+    "precache-manifest.b8bbf05dea1250854d764c0f6c9cc327.js": "/book-library-react/precache-manifest.b8bbf05dea1250854d764c0f6c9cc327.js",
+    "service-worker.js": "/book-library-react/service-worker.js",
+    "static/js/2.9bc19038.chunk.js.LICENSE.txt": "/book-library-react/static/js/2.9bc19038.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.3523973e.js",
+    "static/js/2.9bc19038.chunk.js",
+    "static/js/main.ea490350.chunk.js"
+  ]
+}
