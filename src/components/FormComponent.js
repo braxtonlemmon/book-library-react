@@ -49,7 +49,7 @@ const FormComponent = (props) => {
             value="true"
             id="hasRead"
             onChange={props.handleChange}
-            checked={props.data.readStatus === 'true'}
+            checked={props.data.readStatus === 'true' || props.data.readStatus === true }
           />
           <label htmlFor="notRead">Have not read</label>
           <input
@@ -58,7 +58,7 @@ const FormComponent = (props) => {
             value="false"
             id="notRead"
             onChange={props.handleChange}
-            checked={props.data.readStatus === 'false'}
+            checked={props.data.readStatus === 'false' || props.data.readStatus === false }
           />
         </div>
 
