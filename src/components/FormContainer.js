@@ -20,8 +20,9 @@ class FormContainer extends Component {
 
   handleChange(e) {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    this.setState({[name]: value });
   }
+
 
   handleSubmit(e) {
     e.preventDefault();
@@ -52,8 +53,16 @@ class FormContainer extends Component {
   }
 
   render() {
+    const { title, author, pages, readStatus } = this.state;
+    const isEnabled = 
+      title.length > 0 && 
+      author.length > 0 && 
+      parseInt(pages) > 0 &&
+      readStatus !== '';
+
     return (
       <FormComponent
+        isEnabled={isEnabled}
         data={this.state}
         book={this.props.book}
         handleChange={this.handleChange}
@@ -64,6 +73,5 @@ class FormContainer extends Component {
     )
   }
 }
-
 
 export default FormContainer;

@@ -67,12 +67,15 @@ const FormComponent = (props) => {
             <button
               className="button edit-book"
               onClick={props.handleEdit}
+            disabled={!props.isEnabled}
+
             >Save</button>
           }
           {!props.book &&
             <button
               className="button submitBook"
               onClick={props.handleSubmit}
+              disabled={!props.isEnabled}
             >
               Add Book</button>
           }
