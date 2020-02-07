@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Header from './components/Header.js';
 import AllBooks from './components/AllBooks.js';
 import FormContainer from './components/FormContainer.js';
@@ -58,7 +58,9 @@ class App extends Component {
         }],
         id: prevState.id + 1
       }
-    })
+    },
+      () => { localStorage.setItem('state', JSON.stringify(this.state)) }
+    );
   }
 
   // Update book
@@ -79,7 +81,9 @@ class App extends Component {
       return {
         books: books
       }
-    })
+    },
+      () => { localStorage.setItem('state', JSON.stringify(this.state)) }
+    )
   }
 
   // Delete book
@@ -88,7 +92,22 @@ class App extends Component {
       return {
         books: prevState.books.filter(book => book.id !== idToDelete)
       }
-    })
+    },
+      () => { localStorage.setItem('state', JSON.stringify(this.state)) }
+    )
+  }
+
+  componentDidMount() {
+    const state = JSON.parse(localStorage.getItem('state'));
+    if (state) {
+      this.setState({
+        books: state.books,
+        showForm: state.showForm,
+        editBook: state.editBook,
+        id: state.id,
+        currentBook: state.currentBook,
+      })
+    }
   }
 
   render() {
