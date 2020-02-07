@@ -7,8 +7,12 @@
 
 body {
 	font-family: 'Syncopate', sans-serif;
-	background-color: rgb(172, 147, 147);
+  background-color: rgb(172, 147, 147);
+  min-width: 550px;
+  font-family: 'Poppins', sans-serif;
+  line-height: 1;
 }
+
 
 button {
 	border-radius: 5px;
@@ -134,24 +138,62 @@ button:focus {
 .form-container {
   display: flex;
   flex-direction: column;
-  background-color: red;
-  height: 300px;
+  background-color: rgba(231, 1, 1, 0.87);
+  color: white;
+  max-height: 400px;
+  min-width: 320px;
   position: fixed;
   top: 20%;
   left: 10%;
   right: 10%;
-
+  border: 3px solid black;
 }
 
 .book-form {
   display: flex;
   flex-direction: column;
+  padding: 20px;
+}
+
+.form-title {
+  margin: 0 auto;
+}
+
+input {
+  padding: 5px;
+  text-align: center;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+
+.read-status {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.radio-option >* {
+  padding: 5px;
+}
+.form-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 10px;
+}
+
+.form-buttons >* {
+  padding: 10px;
 }
 
 @media only screen and (min-width: 768px) {
 	.container {
 		grid-template-columns: repeat(3, 1fr);
-	}
+  }
+  
+  .form-container {
+    left: 20%;
+    right: 20%;
+  }
 }
 
 @media only screen and (min-width: 992px) {
@@ -161,5 +203,10 @@ button:focus {
 
 	.book {
 		max-width: 300px;
-	}
+  }
+  
+  .form-container {
+    left: 30%;
+    right: 30%;
+  }
 }

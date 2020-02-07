@@ -4,7 +4,7 @@ const FormComponent = (props) => {
   return (
     <div className="form-container">
       <form className="book-form" name="bookForm">
-        <h2>Book Information</h2>
+        <h2 className="form-title">Book Information</h2>
         <label htmlFor="title">Title</label>
         <input
           placeholder="Title"
@@ -42,24 +42,28 @@ const FormComponent = (props) => {
         />
 
         <div className="read-status">
-          <label htmlFor="hasRead">Have read</label>
-          <input
-            type="radio"
-            name="readStatus"
-            value="true"
-            id="hasRead"
-            onChange={props.handleChange}
-            checked={props.data.readStatus === 'true' || props.data.readStatus === true }
-          />
-          <label htmlFor="notRead">Have not read</label>
-          <input
-            type="radio"
-            name="readStatus"
-            value="false"
-            id="notRead"
-            onChange={props.handleChange}
-            checked={props.data.readStatus === 'false' || props.data.readStatus === false }
-          />
+          <div className="radio-option">
+            <label htmlFor="hasRead">Have read</label>
+            <input
+              type="radio"
+              name="readStatus"
+              value="true"
+              id="hasRead"
+              onChange={props.handleChange}
+              checked={props.data.readStatus === 'true' || props.data.readStatus === true }
+            />
+          </div>
+          <div className="radio-option">
+            <label htmlFor="notRead">Have not read</label>
+            <input
+              type="radio"
+              name="readStatus"
+              value="false"
+              id="notRead"
+              onChange={props.handleChange}
+              checked={props.data.readStatus === 'false' || props.data.readStatus === false }
+            />
+          </div>
         </div>
 
         <div className="form-buttons">
@@ -67,13 +71,13 @@ const FormComponent = (props) => {
             <button
               className="button edit-book"
               onClick={props.handleEdit}
-            disabled={!props.isEnabled}
-
-            >Save</button>
+              disabled={!props.isEnabled}
+            >
+              Save</button>
           }
           {!props.book &&
             <button
-              className="button submitBook"
+              className="button submit-book"
               onClick={props.handleSubmit}
               disabled={!props.isEnabled}
             >
@@ -82,7 +86,8 @@ const FormComponent = (props) => {
           <button
             className="button cancel"
             onClick={props.handleCancel}
-          >Cancel</button>
+          >
+            Cancel</button>
         </div>
       </form>
     </div>
