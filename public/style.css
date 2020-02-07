@@ -134,10 +134,13 @@ button:focus {
 .form-container {
   display: flex;
   flex-direction: column;
-  grid-column: 2 / span 1;
-  grid-row: 2 / span 1;
   background-color: red;
   height: 300px;
+  position: fixed;
+  top: 20%;
+  left: 10%;
+  right: 10%;
+
 }
 
 .book-form {

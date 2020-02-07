@@ -7,13 +7,17 @@ class App extends Component {
     this.state = {
       books: this.props.books,
       showForm: false,
-      currentId: this.props.books[this.props.books.length - 1].id
+      editBook: false,
+      id: this.props.books[this.props.books.length - 1].id,
+      currentBook: null,
     }
-    this.createBook = this.createBook.bind(this);
-    this.deleteBookFromState = this.deleteBookFromState.bind(this);
     this.showForm = this.showForm.bind(this);
+    this.getBook = this.getBook.bind(this);
     this.hideForm = this.hideForm.bind(this);
-    // this.editBook = this.editBook.bind(this);
+    this.showEditForm = this.showEditForm.bind(this);
+    this.createBook = this.createBook.bind(this);
+    this.updateBook = this.updateBook.bind(this);
+    this.deleteBookFromState = this.deleteBookFromState.bind(this);
   }
   
   showForm = () => {
@@ -21,42 +25,66 @@ class App extends Component {
   }
 
   getBook = (id) => { 
-    const book = this.state.books.find(book => book.id === id) 
-    console.log(book);
+    const book = this.state.books.find(book => book.id === id) || false;
     return book;
   };
 
   hideForm = () => {
-    this.setState({showForm: false});
+    this.setState({showForm: false, editBook: false});
   }
 
-  // editBook = (idToEdit) => {
-  //   return this.state.books.find(book => book.id === idToEdit)
-  // }
-
-  deleteBookFromState = (idToDelete) => {
-    this.setState(prevState => {
-      return { 
-        books: prevState.books.filter(book => book.id !== idToDelete)}
-    })
+  showEditForm = (idToShow) => {
+    this.setState({ showForm: true, 
+                    currentBook: this.getBook(idToShow),
+                    editBook: true });
   }
 
+  // Create book
   createBook = (formData) => {
     this.setState(prevState => {
       return {
         books: [...prevState.books,
           {
-            id: prevState.currentId + 1,
+            id: prevState.id + 1,
             title: formData.title,
             author: formData.author,
             pages: parseInt(formData.pages),
             readStatus: formData.readStatus === 'true' ? true : false,
             img: formData.img
           }],
-        id: prevState.currentId + 1 
+        id: prevState.id + 1 
       }
     })
+  }
 
+  // Update book
+  updateBook = (formData) => {
+    this.setState(prevState => {
+      const books = [...prevState.books];
+      const book = books.find(book => book.id === prevState.currentBook.id);
+      const index = books.indexOf(book);
+      books[index] = 
+        {
+          id: book.id,
+          title: formData.title,
+          author: formData.author,
+          pages: parseInt(formData.pages),
+          readStatus: formData.readStatus === 'true' ? true : false,
+          img: formData.img
+        }
+      return {
+        books: books
+      }
+    })
+  }
+  
+  // Delete book
+  deleteBookFromState = (idToDelete) => {
+    this.setState(prevState => {
+      return {
+        books: prevState.books.filter(book => book.id !== idToDelete)
+      }
+    })
   }
 
   render() {
@@ -67,17 +95,21 @@ class App extends Component {
           books={this.state.books} 
           formStatus={this.state.showForm}
           deleteBookFromState={this.deleteBookFromState}
-          getBook={this.getBook}
-          editBook={this.editBook}
+          showEditForm={this.showEditForm}
         />
         {this.state.showForm &&
           <FormContainer
-            book={this.getBook}
             sendData={this.createBook}
             hideForm={this.hideForm} 
           />
         }
-        
+        {this.state.editBook &&
+          <FormContainer
+            book={this.state.currentBook}
+            sendData={this.updateBook}
+            hideForm={this.hideForm}
+          />
+        }
       </div>
     )
   }
@@ -98,7 +130,6 @@ const Header = ({ showForm }) => {
 class AllBooks extends Component {
   render() {
     const allBooks = [];
-    console.log(this.props.books);
     this.props.books.forEach(book => {
       allBooks.push(
         <Book 
@@ -106,7 +137,8 @@ class AllBooks extends Component {
           key={book.id}
           formStatus={this.props.formStatus}
           deleteBookFromState={this.props.deleteBookFromState}
-          getBook={this.props.getBook}
+          // getBook={this.props.getBook}
+          showEditForm={this.props.showEditForm}
         />
       )
     })
@@ -114,7 +146,6 @@ class AllBooks extends Component {
       <div className="container">
         {allBooks}
       </div>
-
     )
   }
 }
@@ -128,6 +159,7 @@ class Book extends Component {
           deleteBookFromState={this.props.deleteBookFromState} 
           getBook={this.props.getBook}
           book={this.props.book}
+          showEditForm={this.props.showEditForm}
         />
       </div>
     )
@@ -174,6 +206,7 @@ class BookButtons extends Component {
     super();
     this.deleteBook = this.deleteBook.bind(this);
     this.findBook = this.findBook.bind(this);
+    this.showEditForm = this.showEditForm.bind(this);
   }
   
   deleteBook() {
@@ -184,11 +217,15 @@ class BookButtons extends Component {
     this.props.getBook(this.props.book.id);
   }
 
+  showEditForm() {
+    this.props.showEditForm(this.props.book.id);
+  }
+
   render() {
     return (
       <div className="book-buttons">
         <button 
-          onClick={this.findBook}
+          onClick={this.showEditForm}
           className="edit-button"
         >Edit</button>
         <button 
@@ -203,16 +240,18 @@ class BookButtons extends Component {
 class FormContainer extends Component {
   constructor(props) {
     super(props);
+    const book = this.props.book;
     this.state = {
-      title: '',
-      author: '',
-      pages: '',
-      readStatus: '',
+      title: book ? book.title : '',
+      author: book ? book.author : '',
+      pages: book ? book.pages : '',
+      readStatus: book ? book.readStatus : '',
       img: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1442151714l/18803640._SY475_.jpg',
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.sendToParent = this.sendToParent.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
   }
   
   handleChange(e) {
@@ -238,8 +277,14 @@ class FormContainer extends Component {
     this.props.hideForm();
   }
 
+  handleEdit = (e) => {
+    e.preventDefault();
+    this.sendToParent();
+    this.props.hideForm();
+  }
+
   sendToParent = () => {
-    this.props.sendData(this.state)
+    this.props.sendData(this.state);
   }
 
   render() {
@@ -305,11 +350,20 @@ class FormContainer extends Component {
           </div>
   
           <div className="form-buttons">
-            <button 
-              className="button submitBook"
-              onClick={this.handleSubmit}
-            >
-              Add Book</button>
+            {this.props.book &&
+              <button
+                className="button edit-book"
+                onClick={this.handleEdit}
+              >Save</button>
+            }
+            {!this.props.book &&
+              <button
+                className="button submitBook"
+                onClick={this.handleSubmit}
+              >
+                Add Book</button>
+            }
+
             <button 
               className="button cancel"
               onClick={this.handleCancel}
