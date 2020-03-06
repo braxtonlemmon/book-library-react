@@ -8,5 +8,8 @@ Project from [The Odin Project](https://www.theodinproject.com/lessons/framework
 - Props
 - localStorage
 
+# Live
+View [live](https://braxtonlemmon.github.io/book-library-react/)
+
 # Authors
 Braxton Lemmon
