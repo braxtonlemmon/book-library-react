@@ -16,7 +16,7 @@ class FormContainer extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.sendToParent = this.sendToParent.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
-  }
+  } 
 
   handleChange(e) {
     const { name, value } = e.target;
