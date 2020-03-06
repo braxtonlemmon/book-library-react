@@ -8,6 +8,11 @@ Project from [The Odin Project](https://www.theodinproject.com/lessons/framework
 - Props
 - localStorage
 
+# To run
+Clone the repository. Then run the following from the directory root:
+```$ npm install```
+```$ npm start```
+
 # Live
 View [live](https://braxtonlemmon.github.io/book-library-react/)
 
